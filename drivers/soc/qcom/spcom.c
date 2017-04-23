@@ -1723,12 +1723,16 @@ static int spcom_handle_lock_ion_buf_command(struct spcom_channel *ch,
 
 	pr_debug("ion handle ok.\n");
 
+	/* ION buf lock doesn't involve any rx/tx data to SP. */
+	mutex_lock(&ch->lock);
+
 	/* Check if this ION buffer is already locked */
 	for (i = 0 ; i < ARRAY_SIZE(ch->ion_handle_table) ; i++) {
 		if (ch->ion_handle_table[i] == ion_handle) {
 			pr_err("fd [%d] ion buf is already locked.\n", fd);
 			/* decrement back the ref count */
 			ion_free(spcom_dev->ion_client, ion_handle);
+			mutex_unlock(&ch->lock);
 			return -EINVAL;
 		}
 	}
@@ -1740,11 +1744,14 @@ static int spcom_handle_lock_ion_buf_command(struct spcom_channel *ch,
 			ch->ion_fd_table[i] = fd;
 			pr_debug("ch [%s] locked ion buf #%d, fd [%d].\n",
 				ch->name, i, fd);
+			mutex_unlock(&ch->lock);
 			return 0;
 		}
 	}
 
 	pr_err("fd [%d] ion buf not found.\n", fd);
+
+	mutex_unlock(&ch->lock);
 
 	return -EFAULT;
 }
@@ -1824,7 +1831,12 @@ static int spcom_handle_unlock_ion_buf_command(struct spcom_channel *ch,
 		return -EINVAL;
 	}
 
+	/* ION buf unlock doesn't involve any rx/tx data to SP. */
+	mutex_lock(&ch->lock);
+
 	ret = spcom_unlock_ion_buf(ch, fd);
+
+	mutex_unlock(&ch->lock);
 
 	return ret;
 }
