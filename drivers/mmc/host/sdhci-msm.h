@@ -220,6 +220,7 @@ struct sdhci_msm_host {
 	bool mci_removed;
 	const struct sdhci_msm_offset *offset;
 	struct proc_dir_entry	*speed_class;
+	bool pltfm_init_done;
 };
 
 extern char *saved_command_line;
