@@ -2236,7 +2236,7 @@ static void monitor_tsens_status(struct work_struct *work)
 			if (enable > 0) {
 				rc = msm_tsens_get_temp(tsens_id, &temp);
 				if (!rc){
-					scnprintf(message, MESSAGE_SIZE, "%s(%d,%d.%ld)", j > 0 ? "," : "", tsens_id, temp/10, abs(temp%10));
+					scnprintf(message, MESSAGE_SIZE, "%s(%d,%d.%d)", j > 0 ? "," : "", tsens_id, temp/10, abs(temp%10));
 					safe_strcat(thermal_message, message);
 				}else
 					tsens_id++;
