@@ -697,7 +697,7 @@ unsigned int sched_get_cluster_wake_idle(int cpu)
  * EARLY_DETECTION_DURATION can be flagged early as potential
  * high load tasks.
  */
-#define EARLY_DETECTION_DURATION 9500000
+#define EARLY_DETECTION_DURATION 7000000
 
 static __read_mostly unsigned int sched_ravg_hist_size = 5;
 __read_mostly unsigned int sysctl_sched_ravg_hist_size = 5;
@@ -774,7 +774,7 @@ min_max_possible_capacity = 1024; /* min(rq->max_possible_capacity) */
 __read_mostly unsigned int sched_ravg_window = MIN_SCHED_RAVG_WINDOW;
 
 /* Maximum allowed threshold before freq aggregation must be enabled */
-#define MAX_FREQ_AGGR_THRESH 1000
+#define MAX_FREQ_AGGR_THRESH 900
 
 /* Temporarily disable window-stats activity on all cpus */
 unsigned int __read_mostly sched_disable_window_stats;
@@ -902,7 +902,7 @@ unsigned int __read_mostly sysctl_sched_prefer_sync_wakee_to_waker;
  * capacity.
  */
 unsigned int __read_mostly sched_upmigrate;
-unsigned int __read_mostly sysctl_sched_upmigrate_pct = 80;
+unsigned int __read_mostly sysctl_sched_upmigrate_pct = 60;
 
 /*
  * Big tasks, once migrated, will need to drop their bandwidth
@@ -910,14 +910,14 @@ unsigned int __read_mostly sysctl_sched_upmigrate_pct = 80;
  * migrated.
  */
 unsigned int __read_mostly sched_downmigrate;
-unsigned int __read_mostly sysctl_sched_downmigrate_pct = 60;
+unsigned int __read_mostly sysctl_sched_downmigrate_pct = 55;
 
 /*
  * Task groups whose aggregate demand on a cpu is more than
  * sched_group_upmigrate need to be up-migrated if possible.
  */
 unsigned int __read_mostly sched_group_upmigrate;
-unsigned int __read_mostly sysctl_sched_group_upmigrate_pct = 100;
+unsigned int __read_mostly sysctl_sched_group_upmigrate_pct = 70;
 
 /*
  * Task groups, once up-migrated, will need to drop their aggregate
@@ -925,7 +925,7 @@ unsigned int __read_mostly sysctl_sched_group_upmigrate_pct = 100;
  * migrated.
  */
 unsigned int __read_mostly sched_group_downmigrate;
-unsigned int __read_mostly sysctl_sched_group_downmigrate_pct = 95;
+unsigned int __read_mostly sysctl_sched_group_downmigrate_pct = 60;
 
 /*
  * The load scale factor of a CPU gets boosted when its max frequency
