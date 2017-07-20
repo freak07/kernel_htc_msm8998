@@ -39,7 +39,7 @@ static struct workqueue_struct *cpu_boost_wq;
 static int wake_bc, wake_lc;
 static bool input_boost_enabled;
 
-static unsigned int input_boost_ms = 200;
+static unsigned int input_boost_ms = 750;
 module_param(input_boost_ms, uint, 0644);
 
 static bool sched_boost_on_input;
